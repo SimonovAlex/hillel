@@ -1,3 +1,12 @@
+// Quokka 
+
+// const mainN = prompt('Введите длину главного массива');
+//  const subN = prompt('Введите длину внутренних массивов');
+//  const arr = new Array(+mainN).fill(0)
+//    .map((_, ind) =>
+//      new Array(+subN).fill(0).map((_, i) => prompt(Введите элемент ${i} в подмассиве ${ind})));
+//  alert('Ваш массив:' + arr.map(subArr => '\n' + subArr));
+
 // delete min 
 //  Input: [1,2,3,4,5], output= [2,3,4,5]
 //  Input: [5,3,2,1,4], output = [5,3,2,4]
