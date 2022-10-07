@@ -22,3 +22,17 @@ counter.increment();
 alert(counter.value()); // 2.
 counter.decrement();
 alert(counter.value()); // 1.
+
+
+
+
+const test = {
+  prop: 42,
+  func: function() {
+    return this.prop;
+  },
+};
+console.log(test.func());
+console.log(test.func.bind({prop: 12})());
+
+// expected output: 42
