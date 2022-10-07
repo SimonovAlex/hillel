@@ -75,9 +75,9 @@
 // console.log(addSum, add) 
 // console.log(addSum === add)
 
-const arr = [1,2,3,4,5]; // 1, 2, 3
+// const arr = [1,2,3,4,5]; // 1, 2, 3
 
 
-console.log(arr.slice(1,4).join('||-||'))
-console.log(arr === arr.slice(1,4), arr === arr.slice(0), arr.slice(0));
+// console.log(arr.slice(1,4).join('||-||'))
+// console.log(arr === arr.slice(1,4), arr === arr.slice(0), arr.slice(0));
 
