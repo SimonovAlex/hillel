@@ -1,4 +1,4 @@
-// Quokka 
+x// Quokka 
 
 // const mainN = prompt('Введите длину главного массива');
 //  const subN = prompt('Введите длину внутренних массивов');
