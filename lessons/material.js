@@ -1,38 +1,33 @@
-var makeCounter = function() {
-  var privateCounter = 0;
-  function changeBy(val) {
-    privateCounter += val;
-  }
-  return {
-    increment: function() {
-      changeBy(1);
-    },
-    decrement: function() {
-      changeBy(-1);
-    },
-    value: function() {
-      return privateCounter;
-    }
-  }
+var filter= {
+  EnablePagination: true
 };
-var counter = makeCounter();
-alert(counter.value());  // 0.
-counter.increment();
-counter.increment();
-alert(counter.value()); // 2.
-counter.decrement();
-alert(counter.value()); // 1.
 
 
+function BaseFilter(size) {
+  this.PageSize = size;
 
+  this.test = function(){
+    console.log(this)
+  }
+}
+BaseFilter.prototype = filter;
 
-const test = {
-  prop: 42,
-  func: function() {
-    return this.prop;
-  },
+function extend(Child, Parent) {
+  var F = function() { }
+  F.prototype = Parent.prototype
+  Child.prototype = new F() 
+  Child.prototype.constructor = Child 
+  Child.superclass = Parent.prototype 
 };
-console.log(test.func());
-console.log(test.func.bind({prop: 12})());
 
-// expected output: 42
+function isInstanceOf(obj, constructor) {
+  if (obj.__proto__ === constructor.prototype) {
+      return true; 
+  }
+  else    if (obj.__proto__ !== null) {
+          return isInstanceOf(obj.__proto__, constructor) 
+      }
+      else     {        
+          return false 
+      }
+};
