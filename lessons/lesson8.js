@@ -47,10 +47,6 @@ class CoffeeRecept {
   }
 }
 
-// const obj = {
-//   test: function(){
-//     console.log('test')
-//   }
 
 // };
 
@@ -78,7 +74,7 @@ const espresso = new EspressoRecept(20, 5);
 espresso.addSugar();
 
 
-console.log(espresso.getInfo());
+console.log(espresso);
 
 class AmericanoRecept extends CoffeeRecept {
   constructor(water){
@@ -103,13 +99,12 @@ class AmericanoRecept extends CoffeeRecept {
 }
 
 const americano = new AmericanoRecept(30);
-console.log(americano)
-
+console.log(americano);
 americano.cookingEspresso(2);
 americano.addWater(400);
 americano.cookingEspresso();
 
-console.log(americano.getInfo())
+// console.log(americano.getInfo())
 
 class LatteRecept extends CoffeeRecept{
   constructor(milk){

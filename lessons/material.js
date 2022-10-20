@@ -10,6 +10,7 @@ function BaseFilter(size) {
     console.log(this)
   }
 }
+
 BaseFilter.prototype = filter;
 
 function extend(Child, Parent) {
