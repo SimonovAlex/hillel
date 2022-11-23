@@ -79,6 +79,14 @@ function removeToDoItem(event) {
 
   // const index = state.findIndex(s => s.id.toString() == event.target.parentElement.dataset.id);
   const liObj = findObjbyEvent(event);
+
+  const checkboxRef = event.target.parentElement.querySelector('input');
+  const buttonsRef = [...event.target.parentElement.querySelectorAll('button')];
+
+  checkboxRef.removeEventListener('click', checkedToDoItem);
+  buttonsRef[0].removeEventListener('click', editToDoItem);
+  buttonsRef[1].removeEventListener('click', removeToDoItem);
+
   const index = state.findIndex(s => s === liObj);
   deleteTodo(state[index].id)
   // console.log(index);
@@ -191,7 +199,7 @@ function findObjbyEvent(event) {
 
 
 function cookedData (item) {
-  console.log('item', item);
+  // console.log('item', item);
   return {text: item.title, checked: item.completed, id: item.id,editable: false}
 }
 
@@ -224,7 +232,7 @@ function updateData(id, data) {
         'Content-type': 'application/json; charset=UTF-8',
       },
     }).then(data => {
-      console.log(data)
+      // console.log(data)
       if(!data.ok){
         throw new Error(data.status);
       }
