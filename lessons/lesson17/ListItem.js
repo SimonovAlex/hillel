@@ -1,27 +1,49 @@
+import State from "./State.js";
+
 class ListItem {
   constructor(obj){
-    console.log('obj', obj);
 
     this.text = obj.text;
     this.checked = obj.checked;
     this.editable = obj.editable;
+    this.id = obj.id;
 
+    this.state = State.getInstance();
 
     this.checkedToDoItem = this.checkedToDoItem.bind(this);
     this.editToDoItem = this.editToDoItem.bind(this);
     this.removeToDoItem = this.removeToDoItem.bind(this);
+    this.saveToDoItem = this.saveToDoItem.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.handleChangeText = this.handleChangeText.bind(this);
   }
 
-  checkedToDoItem(e) {
-    console.log(e)
+  checkedToDoItem() {
+    const item = this.state.findById(this.id);
+    this.state.update(this.id, {...item, checked: !item.checked});
   }
 
-  editToDoItem(e) {
-    console.log(e)
+  editToDoItem() {
+    const item = this.state.findById(this.id);
+    this.state.update(this.id, {...item, editable: true});
   }
 
-  removeToDoItem(e){
-    console.log(e)
+  removeToDoItem(){
+    this.state.delete(this.id);
+  }
+
+  saveToDoItem(){
+    const item = this.state.findById(this.id);
+    this.state.update(this.id, {...item, text: this.text, editable: false});
+  }
+
+  cancel(){
+    const item = this.state.findById(this.id);
+    this.state.update(this.id, {...item, editable: false});
+  }
+
+  handleChangeText(e){
+    this.text = e.target.value;
   }
 
   renderReadable() {
@@ -46,7 +68,6 @@ class ListItem {
     buttonRemove.innerText = 'Remove';
     buttonRemove.addEventListener('click', this.removeToDoItem);
 
-
     item.append(checkbox, span, buttonEdit, buttonRemove);
 
     return item
@@ -55,14 +76,28 @@ class ListItem {
   renderEditable() {
     const item = document.createElement('li');
 
+    const input = document.createElement('input');
+    input.value = this.text;
+    input.addEventListener('input', this.handleChangeText)
+
+    const buttonSave = document.createElement('button');
+    buttonSave.innerText = 'Save';
+
+    buttonSave.addEventListener('click', this.saveToDoItem)
+
+    const buttonCancel = document.createElement('button');
+    buttonCancel.innerText = 'Cancel';
+    buttonCancel.addEventListener('click', this.cancel)
+
+    item.append(input, buttonSave, buttonCancel);
     return item
   }
 
   render() {
     if(this.editable){
-      return this.renderReadable();
-    }else {
       return this.renderEditable();
+    }else {
+      return this.renderReadable();
     }
   }
 }

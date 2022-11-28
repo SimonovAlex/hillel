@@ -1,9 +1,11 @@
+import State from "./State.js";
+
 class Controller {
 
   inputRef
 
-  constructor (state) {
-    this.state = state;
+  constructor () {
+    this.state = State.getInstance();
   }
 
   validate(){
@@ -13,11 +15,10 @@ class Controller {
 
   addToDoItem(e){
     console.log(e);
-    // this.state.push({})
     console.log('addToDoItem', this);
 
     if (this.inputRef.value) {
-      this.state.push({
+      this.state.add({
         text: this.inputRef.value,
         checked: false,
         editable: false,

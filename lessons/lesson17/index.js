@@ -6,20 +6,11 @@
 
 import TodoList from "./TodoList.js"
 
-const todoList = new TodoList("todoListContainer");
+const todoList = TodoList.getInstance("todoListContainer");
+
+console.log();
 
 todoList.render();
-
-const rerender = () => {
-  todoListContainer.innerHTML = ''
-  todoList.render();
-}
-const btn = document.createElement("button");
-btn.innerHTML = "render"
-btn.addEventListener('click', rerender);
-document.body.append(btn)
-
-
 
 
 
