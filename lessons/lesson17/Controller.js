@@ -51,3 +51,5 @@ class Controller {
     return [this.inputRef, addList]
   }
 }
+
+export default Controller;

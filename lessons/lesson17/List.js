@@ -1,3 +1,5 @@
+import ListItem from "./ListItem.js"
+
 class List {
   constructor(state) {
     this.state = state;
@@ -15,3 +17,5 @@ class List {
     return [toDoList, ...rendered]
   }
 }
+
+export default List;

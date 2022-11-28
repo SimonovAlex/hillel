@@ -1,8 +1,33 @@
+import List from "./List.js";
+import Controller from "./Controller.js";
+
+const mockData = [{
+  text: '1 todo',
+  checked: false,
+  editable: false,
+  id: new Date(),
+},{
+  text: '2 todo',
+  checked: false,
+  editable: true,
+  id: new Date()+1,
+},{
+  text: 'todo 3',
+  checked: true,
+  editable: false,
+  id: new Date()+2,
+},{
+  text: 'todo 4',
+  checked: true,
+  editable: true,
+  id: new Date()+5,
+}]
+
 class TodoList {
 
   constructor(id){
     this.id = id;
-    this.state = [];
+    this.state = mockData;
   }
 
   render() {
@@ -16,3 +41,5 @@ class TodoList {
     wrapper.append(...controller.render(), ...list.render());
   }
 }
+
+export default TodoList;

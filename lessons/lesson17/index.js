@@ -4,7 +4,9 @@
 
 // console.log('Controller', render());
 
-const todoList = new todoList("todoListContainer");
+import TodoList from "./TodoList.js"
+
+const todoList = new TodoList("todoListContainer");
 
 todoList.render();
 
@@ -16,6 +18,8 @@ const btn = document.createElement("button");
 btn.innerHTML = "render"
 btn.addEventListener('click', rerender);
 document.body.append(btn)
+
+
 
 
 
