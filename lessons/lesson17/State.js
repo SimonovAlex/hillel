@@ -1,39 +1,46 @@
+import { USER_ID } from "./constants.js";
+import Service from "./Service.js";
+
 export default class State {
 
   static instance;
 
-  static getInstance() {
+  static getInstance(renderFn) {
     if(!State.instance){
       State.instance = new State();
+      State.instance.setRenderFn(renderFn);
     }
     return State.instance;
   }
 
-  #state
+  #state = [];
   #renderFn
 
   constructor (){
-    this.#state = [{
-      text: '1 todo',
-      checked: false,
-      editable: false,
-      id: 'id # 1',
-    },{
-      text: '2 todo',
-      checked: false,
-      editable: true,
-      id: 'id # 2',
-    },{
-      text: 'todo 3',
-      checked: true,
-      editable: false,
-      id: 'id # 3',
-    },{
-      text: 'todo 4',
-      checked: true,
-      editable: true,
-      id: 'id # 4',
-    }];
+
+    this.getInitialTodos();
+  }
+
+  async getInitialTodos(){
+    const todos = await Service.getInitialTodos();
+    this.#state = todos;
+    this.rerender();
+  }
+
+
+  async create(title) {
+    const todo = await Service.createTodo({
+      title,
+      completed: false,
+      userId: USER_ID,
+    });
+  
+    this.#state.push({
+      text: todo.title,
+      checked: todo.completed,
+      id: todo.id,
+    });
+    this.rerender();
   }
 
   add(item){
@@ -41,7 +48,10 @@ export default class State {
     this.rerender();
   }
 
-  delete(id){
+  async delete(id){
+
+    await Service.deleteTodo(id);
+
     const idx = this.findIndById(id);
 
     this.#state.splice(idx, 1);
@@ -49,7 +59,17 @@ export default class State {
     this.rerender();
   }
 
-  update(id, item){
+  async update(id, item){
+
+
+    const {data} = await Service.updateTodo(id, {
+      title: item.text,
+      completed: item.checked,
+      userId: USER_ID,
+    });
+
+    console.log(data);
+
     const idx = this.findIndById(id);
     this.#state[idx] = item;
     this.rerender();
@@ -67,9 +87,9 @@ export default class State {
     return this.#state
   }
 
-setRenderFn(renderFn) {
-  this.#renderFn = renderFn;
-}
+  setRenderFn(renderFn) {
+    this.#renderFn = renderFn;
+  }
 
   rerender(){
     this.#renderFn();

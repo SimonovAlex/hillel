@@ -5,9 +5,10 @@ class ListItem {
 
     this.text = obj.text;
     this.checked = obj.checked;
-    this.editable = obj.editable;
     this.id = obj.id;
 
+    this.editable = false;
+    this.liRef = document.createElement('li');
     this.state = State.getInstance();
 
     this.checkedToDoItem = this.checkedToDoItem.bind(this);
@@ -25,7 +26,9 @@ class ListItem {
 
   editToDoItem() {
     const item = this.state.findById(this.id);
-    this.state.update(this.id, {...item, editable: true});
+    this.editable = true;
+  
+    this.render();
   }
 
   removeToDoItem(){
@@ -34,12 +37,14 @@ class ListItem {
 
   saveToDoItem(){
     const item = this.state.findById(this.id);
-    this.state.update(this.id, {...item, text: this.text, editable: false});
+    this.state.update(this.id, {...item, text: this.text});
+    this.editable = false;
+
   }
 
   cancel(){
     const item = this.state.findById(this.id);
-    this.state.update(this.id, {...item, editable: false});
+    this.editable = false;
   }
 
   handleChangeText(e){
@@ -48,7 +53,6 @@ class ListItem {
 
   renderReadable() {
 
-    const item = document.createElement('li');
     const span = document.createElement('span');
     span.innerText = this.text;
 
@@ -57,7 +61,6 @@ class ListItem {
     if (this.checked) {
       checkbox.checked = 'checked';
     }
-    item.append(checkbox);
     checkbox.addEventListener('click', this.checkedToDoItem);
 
     const buttonEdit = document.createElement('button');
@@ -68,14 +71,11 @@ class ListItem {
     buttonRemove.innerText = 'Remove';
     buttonRemove.addEventListener('click', this.removeToDoItem);
 
-    item.append(checkbox, span, buttonEdit, buttonRemove);
 
-    return item
+    return [checkbox, span, buttonEdit, buttonRemove]
   }
 
   renderEditable() {
-    const item = document.createElement('li');
-
     const input = document.createElement('input');
     input.value = this.text;
     input.addEventListener('input', this.handleChangeText)
@@ -89,16 +89,22 @@ class ListItem {
     buttonCancel.innerText = 'Cancel';
     buttonCancel.addEventListener('click', this.cancel)
 
-    item.append(input, buttonSave, buttonCancel);
-    return item
+    return [input, buttonSave, buttonCancel]
   }
 
   render() {
+    
+    this.liRef.innerHTML = '';
+    
+
+
     if(this.editable){
-      return this.renderEditable();
+       this.liRef.append(...this.renderEditable());
     }else {
-      return this.renderReadable();
+      this.liRef.append(...this.renderReadable());
     }
+
+    return this.liRef;
   }
 }
 

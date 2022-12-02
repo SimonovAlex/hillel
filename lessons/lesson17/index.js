@@ -6,10 +6,8 @@
 
 import TodoList from "./TodoList.js"
 
-const todoList = TodoList.getInstance("todoListContainer");
-
-console.log();
-
+const todoList = await TodoList.getInstance("todoListContainer");
+console.log(todoList);
 todoList.render();
 
 

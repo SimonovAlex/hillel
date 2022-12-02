@@ -10,31 +10,22 @@ class Controller {
 
   validate(){
 
-    console.log('inputList validate', )
+    // console.log('inputList validate', )
   }
 
   addToDoItem(e){
-    console.log(e);
-    console.log('addToDoItem', this);
+  
 
     if (this.inputRef.value) {
-      this.state.add({
-        text: this.inputRef.value,
-        checked: false,
-        editable: false,
-        id: new Date(),
-      })
+      // this.state.add({
+      //   text: this.inputRef.value,
+      //   checked: false,
+      //   editable: false,
+      //   id: new Date(),
+      // })
   
-      // const data = await createTodo(inputRef.value);
-  
-      // if(!data){
-      //   return 
-      // }
+      this.state.create(this.inputRef.value);
 
-
-      // state.push(cookedData(data))
-      // renderLi();
-  
       this.inputRef.value = '';
     }
   }

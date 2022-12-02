@@ -2,40 +2,17 @@ import List from "./List.js";
 import Controller from "./Controller.js";
 import State from "./State.js";
 
-const mockData = [{
-  text: '1 todo',
-  checked: false,
-  editable: false,
-  id: new Date(),
-},{
-  text: '2 todo',
-  checked: false,
-  editable: true,
-  id: new Date()+1,
-},{
-  text: 'todo 3',
-  checked: true,
-  editable: false,
-  id: new Date()+2,
-},{
-  text: 'todo 4',
-  checked: true,
-  editable: true,
-  id: new Date()+5,
-}]
-
 class TodoList {
 
   static instance = {};
-  static getInstance(id) {
+  static async getInstance(id) {
     if(!TodoList.instance[id]){
 
       const instance = new TodoList(id);
-      const state = State.getInstance();
+      const state = State.getInstance(instance.render.bind(instance));
 
       instance.setState(state);
-      state.setRenderFn(instance.render.bind(instance));
-      
+    
       TodoList.instance[id] = instance;
     }
     return TodoList.instance[id];
@@ -50,7 +27,7 @@ class TodoList {
 
   render() {
     const wrapper = document.querySelector(`#${this.id}`);
-    wrapper.innerHTML = ''
+    wrapper.innerHTML = '';
 
     const list = new List();
 
