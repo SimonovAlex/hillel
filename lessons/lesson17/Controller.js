@@ -1,39 +1,31 @@
+import State from "./State.js";
+
 class Controller {
 
   inputRef
 
-  constructor (state) {
-    this.state = state;
+  constructor () {
+    this.state = State.getInstance();
   }
 
   validate(){
 
-    console.log('inputList validate', )
+    // console.log('inputList validate', )
   }
 
   addToDoItem(e){
-    console.log(e);
-    // this.state.push({})
-    console.log('addToDoItem', this);
+  
 
     if (this.inputRef.value) {
-      this.state.push({
-        text: this.inputRef.value,
-        checked: false,
-        editable: false,
-        id: new Date(),
-      })
+      // this.state.add({
+      //   text: this.inputRef.value,
+      //   checked: false,
+      //   editable: false,
+      //   id: new Date(),
+      // })
   
-      // const data = await createTodo(inputRef.value);
-  
-      // if(!data){
-      //   return 
-      // }
+      this.state.create(this.inputRef.value);
 
-
-      // state.push(cookedData(data))
-      // renderLi();
-  
       this.inputRef.value = '';
     }
   }
@@ -51,3 +43,5 @@ class Controller {
     return [this.inputRef, addList]
   }
 }
+
+export default Controller;
